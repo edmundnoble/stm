@@ -126,8 +126,8 @@ flushTQueue (TQueue read write) = do
   unless (null ys) $ writeTVar write []
   return (xs ++ reverse ys)
   
- lazyPeekTQueue :: TQueue -> STM (Solo a)
- lazyPeekTQueue (TQueue read write) = do
+lazyPeekTQueue :: TQueue -> STM (Solo a)
+lazyPeekTQueue (TQueue read write) = do
   xs <- readTVar read
   case xs of
     (x:_) -> return x
