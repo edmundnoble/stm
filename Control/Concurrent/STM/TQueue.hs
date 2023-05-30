@@ -130,7 +130,7 @@ lazyPeekTQueue :: TQueue a -> STM (Solo a)
 lazyPeekTQueue (TQueue read write) = do
   xs <- readTVar read
   case xs of
-    (x:_) -> return x
+    (x:_) -> return (Solo x)
     [] -> do
       ys <- readTVar write
       case ys of
