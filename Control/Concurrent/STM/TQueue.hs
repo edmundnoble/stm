@@ -91,7 +91,7 @@ lazyReadTQueue (TQueue read write) = do
   case xs of
     (x:xs') -> do
       writeTVar read xs'
-      return x
+      return (Solo x)
     [] -> do
       ys <- readTVar write
       case ys of
