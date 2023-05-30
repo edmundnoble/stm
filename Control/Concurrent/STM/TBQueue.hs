@@ -145,8 +145,8 @@ lazyReadTBQueue q = do
 -- |Read the next value from the 'TBQueue'.
 readTBQueue :: TBQueue a -> STM a
 readTBQueue q = do
-  Solo z <- lazyReadTBQueue q
-  return z
+  r <- lazyReadTBQueue q
+  return (case r of Solo z -> z)
 
 -- | A version of 'readTBQueue' which does not retry. Instead it
 -- returns @Nothing@ if no value is available.
@@ -190,8 +190,8 @@ lazyPeekTBQueue (TBQueue _ read _ write _) = do
 -- retrying if the channel is empty.
 peekTBQueue :: TBQueue a -> STM a
 peekTBQueue q = do
-  Solo z <- lazyPeekTBQueue q
-  return z
+  r <- lazyPeekTBQueue q
+  return (case r of Solo z -> z)
 
 -- | A version of 'peekTBQueue' which does not retry. Instead it
 -- returns @Nothing@ if no value is available.
