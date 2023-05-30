@@ -120,7 +120,7 @@ writeTBQueue (TBQueue rsize _read wsize write _size) a = do
   
 -- |Read the next value from the 'TBQueue', allows the work of reversing the stack to be done separately from evaluating the next value.
 lazyReadTBQueue :: TBQueue a -> STM (Solo a)
-lazyReadTBQueue q = do
+lazyReadTBQueue (TBQueue rsize read _wsize write _size)  = do
   xs <- readTVar read
   r <- readTVar rsize
   writeTVar rsize $! r + 1
