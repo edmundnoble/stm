@@ -127,7 +127,7 @@ lazyReadTBQueue (TBQueue rsize read _wsize write _size)  = do
   case xs of
     (x:xs') -> do
       writeTVar read xs'
-      return x
+      return (Solo x)
     [] -> do
       ys <- readTVar write
       case ys of
@@ -174,7 +174,7 @@ lazyPeekTBQueue :: TBQueue a -> STM (Solo a)
 lazyPeekTBQueue (TBQueue _ read _ write _) = do
   xs <- readTVar read
   case xs of
-    (x:_) -> return x
+    (x:_) -> return (Solo x)
     [] -> do
       ys <- readTVar write
       case ys of
